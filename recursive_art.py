@@ -17,7 +17,7 @@ def build_random_function(min_depth, max_depth):
                  these functions)
     """
     depth = random.randint(min_depth, max_depth)
-    list_of_functions = ['prod', 'avg', 'sin_pi', 'cos_pi', 'x', 'y', 'square', 'fun']
+    list_of_functions = ['prod', 'avg', 'sin_pi', 'cos_pi', 'x', 'y', 'square', 'fun', 'cossin']
     list_funcs_two_inputs = ['prod', 'avg', 'fun']
 
     def build_func(depth):
@@ -63,8 +63,9 @@ def evaluate_random_function(f, x, y):
     elif f[0] == "square":
         return evaluate_random_function(f[1], x, y)**2
     elif f[0] == "fun":
-        return (evaluate_random_function(f[1], x, y)**2)*evaluate_random_function(f[2], x, y)**2
-
+        return math.sqrt(evaluate_random_function(f[1], x, y)**2)+evaluate_random_function(f[2], x, y)**2
+    elif f[0] == "cossin":
+        return math.cos(math.pi*math.sin(evaluate_random_function(f[1],x,y)))
 
 def remap_interval(val,
                    input_interval_start,
@@ -148,9 +149,9 @@ def generate_art(filename, x_size=350, y_size=350):
         x_size, y_size: optional args to set image dimensions (default: 350)
     """
     # Functions for red, green, and blue channels - where the magic happens!
-    red_function = build_random_function(10, 20)
-    green_function = build_random_function(10, 20)
-    blue_function = build_random_function(10, 20)
+    red_function = build_random_function(10, 25)
+    green_function = build_random_function(10, 25)
+    blue_function = build_random_function(10, 25)
 
     # Create image and loop over all pixels
     im = Image.new("RGB", (x_size, y_size))
